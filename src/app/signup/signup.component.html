@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="card p-4">
+                <h3>Sign-up</h3>
+                <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label class="form-label" for="name">Name</label>
+                        <input type="text" name="name" class="form-control" formControlName="name"/>
+
+                        <div *ngIf="!signupForm.controls.name?.valid && (signupForm.controls.name?.dirty||signupForm.controls.name?.touched)">
+                            Name is not valid
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="name">Password</label>
+                        <input type="{{password}}" name="pswd" class="form-control" id="passwordDOM" formControlName="pswd"/>
+                        <i class="fa fa-eye" (click)="showpassword(showpasswordbool)"></i>
+
+                        <div *ngIf="!signupForm.controls.pswd?.valid && (signupForm.controls.pswd?.dirty||signupForm.controls.pswd?.touched)">
+                            Password is not valid
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="name">DOB</label>
+                        <input type="date" name="dob" class="form-control" formControlName="dob"/>
+
+                        <div *ngIf="!signupForm.controls.dob?.valid && (signupForm.controls.dob?.dirty||signupForm.controls.dob?.touched)">
+                            DOB is not valid
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success m-4"  [disabled]="!signupForm.valid" >Submit</button>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
