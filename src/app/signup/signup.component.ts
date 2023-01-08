@@ -25,7 +25,6 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(environment.API_URL+'signup');
-    
   }
 
   showpassword(boolVal:boolean){

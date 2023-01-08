@@ -1,0 +1,20 @@
+<div class="container">
+    <table  >
+        <thead>
+            <tr>
+                <th>S.no</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let users of usersList;index as i">
+                <td>{{i+1}}</td>
+                <td>{{users.EmployeeName}}</td>
+                <td>{{users.Department}}</td>
+                <td>{{users.PhotoFileName}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
