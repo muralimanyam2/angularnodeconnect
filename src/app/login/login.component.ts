@@ -36,7 +36,11 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     console.log(this.loginForm.value);
     this.http.post(environment.API_URL+'login',this.loginForm.value, {responseType: 'text'})
-      .subscribe(res=>{
+      .subscribe((res:any)=>{
+        if(res){
+          let token = res;
+          console.log(res)
+        }
         console.log('respone -> '+res.toString());
       });
   }
