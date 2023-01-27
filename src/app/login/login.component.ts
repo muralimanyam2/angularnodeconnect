@@ -4,27 +4,23 @@ import { FormGroup, FormControl, Validators, FormBuilder  } from '@angular/forms
 import { environment } from 'src/environments/environment';
 
 import { HttpClient } from '@angular/common/http';
-
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
-export class SignupComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
+  constructor(private http: HttpClient) { }
   showpasswordbool:boolean=false;
   password:string="password";
   formValidBool:boolean=false;
 
-  signupForm = new FormGroup({
+  loginForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     pswd:new FormControl('', [Validators.required]),
-    dob:new FormControl('', [Validators.required])
   })
-  constructor(private http: HttpClient) { }
-
   ngOnInit(): void {
-    console.log(environment.API_URL+'signup');
   }
 
   showpassword(boolVal:boolean){
@@ -37,13 +33,12 @@ export class SignupComponent implements OnInit {
     }
   }
 
- 
-onSubmit() {
-  //signup
-  this.http.post(environment.API_URL+'signup',this.signupForm.value, {responseType: 'text'})
-    .subscribe(res=>{
-      console.log('respone -> '+res);
-    });
-}
+  onSubmit() {
+    console.log(this.loginForm.value);
+    this.http.post(environment.API_URL+'login',this.loginForm.value, {responseType: 'text'})
+      .subscribe(res=>{
+        console.log('respone -> '+res.toString());
+      });
+  }
 
 }
