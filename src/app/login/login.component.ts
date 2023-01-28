@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder  } from '@angular/forms';
-
+import { AuthService } from '../shared/auth.service';
 import { environment } from 'src/environments/environment';
 
 import { HttpClient } from '@angular/common/http';
@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService:AuthService) { }
   showpasswordbool:boolean=false;
   password:string="password";
   formValidBool:boolean=false;
@@ -35,14 +35,24 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     console.log(this.loginForm.value);
-    this.http.post(environment.API_URL+'login',this.loginForm.value, {responseType: 'text'})
-      .subscribe((res:any)=>{
-        if(res){
-          let token = res;
-          console.log(res)
+    this.http.post(environment.API_URL+'login',this.loginForm.value, {responseType: 'text'}).subscribe((res:any)=>{
+        if(res){  
+          res = JSON.parse(res);
+          res= res[0]
+          this.authService.signIn(res);
+          console.log(typeof(res));
         }
         console.log('respone -> '+res.toString());
       });
   }
 
+  logout(){
+    this.authService.doLogout();
+  }
+
+  trail(){
+    this.http.get(environment.API_URL+'trailId', {responseType: 'text'}).subscribe((res:any)=>{
+      console.log(res)
+    });
+  }
 }
