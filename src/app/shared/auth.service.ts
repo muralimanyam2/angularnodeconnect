@@ -24,15 +24,14 @@ export class AuthService {
     return this.http.post(api, user).pipe(catchError(this.handleError));
   }
   // Sign-in
-  signIn(res:any) { //user: User,
-    console.log(res)
-        localStorage.setItem('access_token', res.token);
-        new HttpHeaders().set("Content-Type", "application/json");
-        var headers_object = new HttpHeaders().set("Authorization", "Bearer-" + res.token);
-        // this.getUserProfile(res._id).subscribe((res) => {
-        //   this.currentUser = res;
-        //   this.router.navigate(['user-profile/' + res.token]);
-        // });
+  signIn(res: any) { //user: User, 
+    localStorage.setItem('access_token', res.token);
+    new HttpHeaders().set("Content-Type", "application/json");
+    var headers_object = new HttpHeaders().set("Authorization", "Bearer-" + res.token);
+    // this.getUserProfile(res._id).subscribe((res) => {
+    //   this.currentUser = res;
+    //   this.router.navigate(['user-profile/' + res.token]);
+    // });
   }
   getToken() {
     return localStorage.getItem('access_token');
