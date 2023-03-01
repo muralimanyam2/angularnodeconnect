@@ -1,0 +1,19 @@
+ <nav class="navbar navbar-expand-sm bg-light navbar-dark">
+    <ul class="navbar-nav" *ngIf=" _isAuthenticLogin==false">
+        <li class="nav-item">
+          <button routerLink="sign-up" class="m-1 btn btn-light btn-outline-primary" Button>Sign up</button>
+        </li>
+        <li class="nav-item">
+          <button routerLink="login" class="m-1 btn btn-light btn-outline-primary" Button>Login</button>
+        </li>
+      </ul>
+      <ul class="navbar-nav" *ngIf=" _isAuthenticLogin">
+        <li class="nav-item">
+            <button routerLink="users" class="m-1 btn btn-light btn-outline-primary" Button>Users</button>
+          </li>
+          <li class="nav-item">
+            <button (click)="logout()" class="m-1 btn btn-light btn-outline-primary" Button>Logout</button>
+          </li>
+      </ul>
+    
+  </nav>

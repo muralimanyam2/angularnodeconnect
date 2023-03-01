@@ -8,7 +8,7 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { Router } from '@angular/router';
-
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -28,6 +28,8 @@ export class AuthService {
     localStorage.setItem('access_token', res.token);
     new HttpHeaders().set("Content-Type", "application/json");
     var headers_object = new HttpHeaders().set("Authorization", "Bearer-" + res.token);
+    environment.InnerNav = true;
+    environment.outerNav = false;
     // this.getUserProfile(res._id).subscribe((res) => {
     //   this.currentUser = res;
     //   this.router.navigate(['user-profile/' + res.token]);
@@ -45,7 +47,9 @@ export class AuthService {
     let removeToken = localStorage.removeItem('access_token');
     new HttpHeaders().delete("Authorization");
     if (removeToken == null) {
-      this.router.navigate(['log-in']);
+      this.router.navigate(['login']);
+      environment.InnerNav = false;
+      environment.outerNav = true;
     }
   }
   // User profile

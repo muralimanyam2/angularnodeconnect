@@ -17,13 +17,15 @@ import { ErrorHttpHandleService } from './shared/error-http-handle.service';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { TopnavComponent } from './topnav/topnav.component';
 @NgModule({
   declarations: [
     AppComponent,
     SignupComponent,
     UsersComponent,
     LoginComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    TopnavComponent
   ],
   imports: [
     BrowserModule,

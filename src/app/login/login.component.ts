@@ -1,57 +1,70 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder  } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+
 import { AuthService } from '../shared/auth.service';
 import { environment } from 'src/environments/environment';
 
-import { HttpClient } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
+
+import { TopnavComponent } from '../topnav/topnav.component';
+
+import { ErrorHttpHandleService } from '../shared/error-http-handle.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers: [TopnavComponent],
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private http: HttpClient, private authService:AuthService) { }
-  showpasswordbool:boolean=false;
-  password:string="password";
-  formValidBool:boolean=false;
+  constructor(private http: HttpClient, private authService: AuthService, private errHandle: ErrorHttpHandleService, private toastr: ToastrService, private Topnav: TopnavComponent) { }
+  showpasswordbool: boolean = false;
+  password: string = "password";
+  formValidBool: boolean = false;
 
   loginForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    pswd:new FormControl('', [Validators.required]),
+    pswd: new FormControl('', [Validators.required]),
   })
   ngOnInit(): void {
   }
 
-  showpassword(boolVal:boolean){
-    if(boolVal){
-      this.password="password";
-      this.showpasswordbool=false;
-    }else{
-      this.password="text";
-      this.showpasswordbool=true;
+  showpassword(boolVal: boolean) {
+    if (boolVal) {
+      this.password = "password";
+      this.showpasswordbool = false;
+    } else {
+      this.password = "text";
+      this.showpasswordbool = true;
     }
   }
 
   onSubmit() {
     console.log(this.loginForm.value);
-    this.http.post(environment.API_URL+'login',this.loginForm.value, {responseType: 'text'}).subscribe((res:any)=>{
-        if(res){  
-          res = JSON.parse(res);
-          res= res[0]
+    this.http.post(environment.API_URL + 'login', this.loginForm.value, { responseType: 'text' }).subscribe((res: any) => {
+      if (res) {
+        res = JSON.parse(res);
+        res = res[0];
+        if (res.token) {
           this.authService.signIn(res);
-          console.log(typeof(res));
+          this.toastr.success('Logged in successfully', ' Success', { timeOut: 2000 });
+          this.errHandle.makeIsAuthenticateTrue();
+          this.Topnav.ngOnInit();
         }
-        console.log('respone -> '+res.toString());
-      });
+      }
+    }, (err) => {
+      this.errHandle.errorHandle(err, 'signup');
+      console.log(err)
+    });
   }
 
-  logout(){
+  logout() {
     this.authService.doLogout();
   }
 
-  trail(){
-    this.http.get(environment.API_URL+'trailId', {responseType: 'text'}).subscribe((res:any)=>{
+  trail() {
+    this.http.get(environment.API_URL + 'trailId', { responseType: 'text' }).subscribe((res: any) => {
       console.log(res)
     });
   }

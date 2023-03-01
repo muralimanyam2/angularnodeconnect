@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  API_URL:"http://localhost:3000/testapi/",
+  API_URL: "http://localhost:3000/testapi/",
+  outerNav: true,
+  InnerNav: false
 };
 
 /*
