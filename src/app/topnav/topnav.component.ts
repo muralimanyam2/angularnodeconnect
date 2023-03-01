@@ -22,8 +22,9 @@ export class TopnavComponent implements OnInit {
     this.errHandle.isAuthenticatedObs.subscribe((isAuth: any) => {
       this._isAuthenticLogin = isAuth;
     });
-    console.log(this._isAuthenticLogin);
-    localStorage.setItem('25', this._isAuthenticLogin);
+    if (localStorage.getItem('access_token')) {
+      this._isAuthenticLogin = true;
+    }
     // this.outerNav = environment.outerNav;
     // this.innerNav = environment.InnerNav;
     // console.log(this.outerNav)
