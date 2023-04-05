@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { AuthService } from '../shared/auth.service';
 import { environment } from 'src/environments/environment';
@@ -18,7 +19,7 @@ import { ErrorHttpHandleService } from '../shared/error-http-handle.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private http: HttpClient, private authService: AuthService, private errHandle: ErrorHttpHandleService, private toastr: ToastrService, private Topnav: TopnavComponent) { }
+  constructor(private http: HttpClient, private authService: AuthService, private errHandle: ErrorHttpHandleService, private toastr: ToastrService, private Topnav: TopnavComponent, private Router: Router) { }
   showpasswordbool: boolean = false;
   password: string = "password";
   formValidBool: boolean = false;
@@ -42,9 +43,10 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     console.log(this.loginForm.value);
-    this.http.post(environment.API_URL + 'login', this.loginForm.value, { responseType: 'text' }).subscribe((res: any) => {
+    this.http.post(environment.API_URL + 'login', this.loginForm.value).subscribe((res: any) => {
       if (res) {
-        res = JSON.parse(res);
+        console.log(res);
+        // res = JSON.parse(res);
         res = res[0];
         if (res.token) {
           this.authService.signIn(res);
@@ -60,6 +62,8 @@ export class LoginComponent implements OnInit {
   }
 
   logout() {
+    console.log("logout")
+    this.errHandle.makeIsAuthenticateFalse();
     this.authService.doLogout();
   }
 

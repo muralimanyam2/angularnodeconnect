@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,7 +10,7 @@ export class ErrorHttpHandleService {
   private _isAuthenticatedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false); //main for
   public isAuthenticatedObs: Observable<boolean> = this._isAuthenticatedSubject.asObservable(); //navbar changing after login
 
-  constructor(private toastr: ToastrService) {
+  constructor(private toastr: ToastrService, private route: Router) {
   }
 
   errorHandle(err: HttpErrorResponse, componentName: any) {

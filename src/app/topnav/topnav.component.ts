@@ -24,14 +24,12 @@ export class TopnavComponent implements OnInit {
     });
     if (localStorage.getItem('access_token')) {
       this._isAuthenticLogin = true;
+      this.router.navigateByUrl('/users');
     }
-    // this.outerNav = environment.outerNav;
-    // this.innerNav = environment.InnerNav;
-    // console.log(this.outerNav)
-    // console.log(this.innerNav)
   }
 
   logout() {
+    this.errHandle.makeIsAuthenticateFalse();
     this.auth.doLogout();
   }
 }

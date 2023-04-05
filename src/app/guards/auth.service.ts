@@ -14,9 +14,8 @@ export class AuthService {
   canAllow() {
     if (this.auth.isLoggedIn) {
       return true;
-    } else {
-      this.router.navigateByUrl('/login');
-      return false
     }
+    this.router.navigateByUrl('/login');
+    return false;
   }
 }
